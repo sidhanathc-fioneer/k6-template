@@ -62,7 +62,6 @@ export function teardown(data) {
   /*  let crocodilesRes=http.get(data.getAllCrocodilesUrl, data.params);
       parseResponse(crocodilesRes);
     let body=JSON.parse(crocodilesRes.body);
-
   //  console.log("Body===============>\n\n  "+JSON.stringify(body));
     body.forEach(function(item){
     //  console.log("item  "+JSON.stringify(item));
