@@ -25,5 +25,7 @@ jobs:
       - name: Run local k6 test
         uses: k6io/action@v0.1
         with:
-          flags: -e K6_HOSTENV=qa -e K6_TEST_TYPE=load
           filename: ./TEMPLATE.js
+        env:
+           K6_HOSTENV: qa
+           K6_TEST_TYPE: load
