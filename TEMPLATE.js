@@ -21,11 +21,11 @@ switch(__ENV.K6_TEST_TYPE){
 
 
 export let user = loadData('user');
-export let crocodiles = loadData('crocodiles');
+export let product = loadData('product');
 
-// TODO :: call loadServiceConfig with the name of the service that you want to load, eg: loadServiceConfig('myservice')
+// TODO :: call loadServiceConfig with the name of the service that you want to load, eg: loadServiceConfig('product')
 //         This parameter must be supplied with a value. The directory './services/' will be searched and '.json' appended
-export let serviceConfig = Object.assign({}, loadServiceConfig('myservice'), {
+export let serviceConfig = Object.assign({}, loadServiceConfig('product'), {
   params: withHeaders({ "Content-Type": "application/json"})
 });
 
@@ -33,7 +33,7 @@ export function setup() {
 
 //  const addUserRes=http.post(serviceConfig.addUserUrl, user, serviceConfig.params)
   //parseResponse(addUserRes);
-
+  /*
   const loginRes=http.post(serviceConfig.loginUrl, user, {});
  // console.log("loginRes  "+JSON.stringify(loginRes));
   parseResponse(loginRes);
@@ -41,32 +41,66 @@ export function setup() {
    serviceConfig.params=withHeaders({'Content-Type': 'application/json',
                               'Authorization': 'Bearer '+authToken});
  // console.log("serviceConfig  "+JSON.stringify(serviceConfig.params));
+  */
+
+  let productsResp=http.get(serviceConfig.getAllProductsUrl, serviceConfig.params);
+  parseResponse(productsResp);
+  let body=JSON.parse(productsResp.body);
+//  console.log("Products  "+JSON.stringify(body));
+  let results = body.filter(item => item.type=='Book');
+  serviceConfig.filterEntity=results;
+//  console.log("Filter  "+JSON.stringify(results))
   return serviceConfig;
    }
 
 
-export default function (data) {
-  // TODO :: Update `data.baseUrl` with the extension to your endpoint, eg: data.baseUrl + "public/crocodiles"
-/*
-  group("POST /my/crocodiles/", function() {
-  parseResponse(http.post(data.addCrocodilesUrl, JSON.stringify(crocodiles), data.params));
-  });
-*/
-  group("GET /my/crocodiles/", function() {
-  parseResponse(http.get(data.getAllCrocodilesUrl, data.params));
+export  function getProducts(data) {
+  group("GET /getProducts/", function() {
+  parseResponse(http.get(data.getAllProductsUrl, data.params));
   });
 };
 
+
+export  function getProductById(data) {
+  group("GET /getProductById/", function() {
+  let items=data.filterEntity;
+  let item=items[Math.floor(Math.random() * items.length)]
+  if(item){
+  //console.log("item  "+JSON.stringify(item));
+  parseResponse(http.get(data.getProductByIdUrl.replace('$id',item.id), data.params));
+  }
+  });
+};
+
+export  function addProduct(data) {
+  group("POST /addProduct/", function() {
+    parseResponse(http.post(data.addProductUrl, JSON.stringify(product), data.params));
+  });
+};
+
+export  function deleteProductById(data) {
+  group("DELETE /deleteProductById/", function() {
+  let items=data.filterEntity;
+  let item=items[Math.floor(Math.random() * items.length)]
+  if(item){
+//  console.log("item  "+JSON.stringify(item));
+  parseResponse(http.del(data.deleteProductByIdUrl.replace('$id',item.id), data.params));
+  }
+});
+};
+
+  export  function modifyProductById(data) {
+    group("MODIFY /modifyProductById/", function() {
+    let items=data.filterEntity;
+    let item=items[Math.floor(Math.random() * items.length)]
+    if(item){
+  //  console.log("item  "+JSON.stringify(item));
+    parseResponse(http.put(data.deleteProductByIdUrl.replace('$id',item.id),JSON.stringify(product), data.params));
+    }
+    });
+};
+
 export function teardown(data) {
-//  console.log("service config  "+JSON.stringify(data));
-  /*  let crocodilesRes=http.get(data.getAllCrocodilesUrl, data.params);
-      parseResponse(crocodilesRes);
-    let body=JSON.parse(crocodilesRes.body);
-  //  console.log("Body===============>\n\n  "+JSON.stringify(body));
-    body.forEach(function(item){
-    //  console.log("item  "+JSON.stringify(item));
-    //    parseResponse(http.del(data.deleteCrocodilesUrl.replace('$id',item.id),{}, data.params));
-      });
-*/
-    parseResponse(http.post(serviceConfig.logoutUrl, user, data.params));
+
+//    parseResponse(http.post(serviceConfig.logoutUrl, user, data.params));
   };
