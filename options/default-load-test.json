@@ -111,11 +111,11 @@
          "timeUnit":"1s",
          "stages":[
             {
-               "target":40,
-               "duration":"30s"
+               "target":60,
+               "duration":"60s"
             },
             {
-               "target":40,
+               "target":80,
                "duration":"1m30s"
             },
             {
@@ -124,7 +124,7 @@
             }
          ],
          "preAllocatedVUs":50,
-         "maxVUs":100,
+         "maxVUs":200,
          "tags":{
             "test_type":"deleteProductById"
          },
