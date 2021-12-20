@@ -1,26 +1,24 @@
 {
+
    "scenarios":{
       "getProducts":{
          "executor":"ramping-arrival-rate",
-         "startTime":"15s",
-         "startRate":50,
+         "startTime":"1s",
+         "startRate":5,
          "timeUnit":"1s",
          "stages":[
             {
-               "target":40,
-               "duration":"30s"
+               "target":1,
+               "duration":"10s"
             },
-            {
-               "target":40,
-               "duration":"1m30s"
-            },
+
             {
                "target":0,
-               "duration":"30s"
+               "duration":"10s"
             }
          ],
-         "preAllocatedVUs":50,
-         "maxVUs":100,
+         "preAllocatedVUs":1,
+         "maxVUs":1,
          "tags":{
             "test_type":"getProducts"
          },
@@ -28,25 +26,22 @@
       },
       "addProduct":{
          "executor":"ramping-arrival-rate",
-         "startTime":"15s",
-         "startRate":50,
+         "startTime":"1s",
+         "startRate":5,
          "timeUnit":"1s",
          "stages":[
             {
-               "target":40,
-               "duration":"30s"
+               "target":1,
+               "duration":"10s"
             },
-            {
-               "target":40,
-               "duration":"1m30s"
-            },
+
             {
                "target":0,
-               "duration":"30s"
+               "duration":"10s"
             }
          ],
-         "preAllocatedVUs":50,
-         "maxVUs":100,
+         "preAllocatedVUs":1,
+         "maxVUs":1,
          "tags":{
             "test_type":"addProduct"
          },
@@ -54,25 +49,22 @@
       },
       "getProductById":{
          "executor":"ramping-arrival-rate",
-         "startTime":"15s",
-         "startRate":50,
+         "startTime":"10s",
+         "startRate":5,
          "timeUnit":"1s",
          "stages":[
             {
-               "target":40,
-               "duration":"30s"
+               "target":1,
+               "duration":"10s"
             },
-            {
-               "target":40,
-               "duration":"1m30s"
-            },
+
             {
                "target":0,
-               "duration":"30s"
+               "duration":"10s"
             }
          ],
-         "preAllocatedVUs":50,
-         "maxVUs":100,
+         "preAllocatedVUs":1,
+         "maxVUs":1,
          "tags":{
             "test_type":"getProductById"
          },
@@ -80,25 +72,22 @@
       },
       "modifyProductById":{
          "executor":"ramping-arrival-rate",
-         "startTime":"15s",
-         "startRate":50,
+         "startTime":"1s",
+         "startRate":5,
          "timeUnit":"1s",
          "stages":[
             {
-               "target":40,
-               "duration":"30s"
+               "target":1,
+               "duration":"10s"
             },
-            {
-               "target":40,
-               "duration":"1m30s"
-            },
+
             {
                "target":0,
-               "duration":"30s"
+               "duration":"10s"
             }
          ],
-         "preAllocatedVUs":50,
-         "maxVUs":100,
+         "preAllocatedVUs":1,
+         "maxVUs":1,
          "tags":{
             "test_type":"modifyProductById"
          },
@@ -106,25 +95,21 @@
       },
       "deleteProductById":{
          "executor":"ramping-arrival-rate",
-         "startTime":"15s",
-         "startRate":50,
+         "startTime":"10s",
+         "startRate":5,
          "timeUnit":"1s",
          "stages":[
             {
-               "target":60,
-               "duration":"60s"
-            },
-            {
-               "target":80,
-               "duration":"1m30s"
+               "target":1,
+               "duration":"10s"
             },
             {
                "target":0,
-               "duration":"30s"
+               "duration":"10s"
             }
          ],
-         "preAllocatedVUs":50,
-         "maxVUs":200,
+         "preAllocatedVUs":1,
+         "maxVUs":1,
          "tags":{
             "test_type":"deleteProductById"
          },
@@ -133,20 +118,20 @@
    },
    "thresholds":{
       "http_req_duration{test_type:getProducts}":[
-         "p(95)<250",
-         "p(99)<350"
+         "p(95)<250"
       ],
       "http_req_duration{test_type:addProduct}":[
-         "p(95)<200"
+         "p(95)<250"
       ],
       "http_req_duration{test_type:getProductById}":[
-         "p(95)<200"
+         "p(95)<250"
       ],
       "http_req_duration{test_type:modifyProductById}":[
-         "p(95)<200"
+         "p(95)<250"
       ],
       "http_req_duration{test_type:deleteProductById}":[
-         "p(95)<200"
+         "p(95)<250"
       ]
    }
+
 }

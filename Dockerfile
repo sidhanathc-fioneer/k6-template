@@ -1,5 +1,4 @@
-FROM loadimpact/k6
-WORKDIR /app/
-COPY . .
-ENV K6_SCRIPT="index.js" K6_HOSTENV="qa" TERM="xterm-256color"
-ENTRYPOINT [ "/bin/sh", "/app/run.sh" ]
+FROM openjdk:8-jdk-alpine
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
