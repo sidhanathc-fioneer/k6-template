@@ -80,9 +80,9 @@ jobs:
       - name: Deploy to Kyma
         run: |
           #sed -i'' -e 's/:v1.2.0/:${{ github.sha }}/g' product-service/product-deployment-kyma.yaml
-          kubectl delete -f product-service/k8s/deployment-kyma.yaml -n perf-test
+          kubectl delete -f ./k8s/deployment-kyma.yaml -n perf-test
           sleep 5s
-          kubectl apply -f product-service/k8s/deployment-kyma.yaml -n perf-test
+          kubectl apply -f ./k8s/deployment-kyma.yaml -n perf-test
           sleep 20s
   k6_smoke_test:
     name: Smoke Test using k6
